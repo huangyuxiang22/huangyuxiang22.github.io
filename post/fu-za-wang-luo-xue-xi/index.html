@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>复杂网络学习 | HuangYuxiang</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://huangyuxiang22.github.io/favicon.ico?v=1689307988236">
+<link rel="stylesheet" href="https://huangyuxiang22.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="复杂网络
+下面主要从规则网络，讲解到了随机ER网络。但是
+复杂网络分为随机网络和规则网络。
+​	规则网络有有限规则网络和无限规则网络，例如每个节点都与其最乡邻的四个节点相连接的话，如果将这些节点按照行的方式连接在一起，就能变成无限规则网络。..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://huangyuxiang22.github.io">
+        <img src="https://huangyuxiang22.github.io/images/avatar.png?v=1689307988236" class="site-logo">
+        <h1 class="site-title">HuangYuxiang</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="https://huangyuxiang22.github.io/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="https://huangyuxiang22.github.io/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by Gridea | <a class="rss" href="https://huangyuxiang22.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">复杂网络学习</h2>
+            <div class="post-date">2023-07-13</div>
+            
+              <div class="feature-container" style="background-image: url('data:image/png;base64,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')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="复杂网络">复杂网络</h1>
+<p>下面主要从规则网络，讲解到了随机ER网络。但是</p>
+<h2 id="复杂网络分为随机网络和规则网络">复杂网络分为随机网络和规则网络。</h2>
+<p>​	规则网络有有限规则网络和无限规则网络，例如每个节点都与其最乡邻的四个节点相连接的话，如果将这些节点按照行的方式连接在一起，就能变成无限规则网络。</p>
+<figure data-type="image" tabindex="1"><img src="https://raw.githubusercontent.com/huangyuxiang22/picgo/master/image-20230703152737207.png" alt="image-20230703152737207" loading="lazy"></figure>
+<p>​	如果节点之间不是按确定规则的连线的时候就是随机网络。如果节点按照某种自组织原则方式连线，将可以演化成不同的网络，称为复杂网络。本文研究的网络不考虑两个节点之间的重复连线，以及一个节点自身到自身的连线。</p>
+<p>​	<strong>随机ER网络</strong>，就是网络当中的任何两个节点，都以概率p连线，生成的网络全体称为G(N,p)，构成一个概率空间。网络当中的连线的数目是一个随机变量。经过推导网络当中的平均连线数目服从二项分布，网络当中的连线数目是<img src="https://raw.githubusercontent.com/huangyuxiang22/picgo/master/image-20230703153233271.png" alt="image-20230703153233271" loading="lazy"></p>
+<p>​	但是其实ER的网络当中的节点总数N是预先给定的，所以它是静态的、固定的、平衡的网络。也有人称之为设计网络。与此对应的是如果网络的节点数目不是固定的话就被称为演化网络。</p>
+<p>​	<strong>六度分隔</strong>，在社会系统当中曾经做过一个著名的实验，这个实验说明，尽管人际关系网络及其庞大和复杂，但是这个平均路径则是相对比较短的。</p>
+<p>​	<strong>三倍传递比</strong>，住在同一个小区内的邻居比较熟悉，在同一个单位工作的彼此认识，表现出来很高的集群性。说明人际网络有<strong>比较大的群集系数</strong>。</p>
+<p>​	容易知道，规则网络有比较大的群集系数，但是随着网络规模的增大，它的平均轮径却很长；随机网络虽然有比较短的平均路径，但是群集系数很小。两者都与实际的社会网络不一致。<strong>人们发现，在熟人关系网络当中，每个人都会有几个远方的朋友，但是这些远方朋友的存在很可能从根本上改变网络的结构。</strong></p>
+<p>​</p>
+<p>​	<strong>WS网络</strong>规则网络是秩序的象征，随机网络是混乱的代表，现实网络不太可能是这两个极端之一。于是提出了小世界模型。</p>
+<p>（1）给定规则网：假如有一个节点总数为N，每个节点都与它最近邻的K=2k个节点相连线，形成一个有限的规则网络，要求N&gt;&gt;k&gt;&gt;1。</p>
+<p>（2）改写旧连线：以概率p围为规则网络的每条旧连线重新布线，方法是将该连线的一个端点随机地放到一个新位置上，但需要排除自身到自身的连线和重复连线。</p>
+<figure data-type="image" tabindex="2"><img src="https://raw.githubusercontent.com/huangyuxiang22/picgo/master/image-20230703154942513.png" alt="image-20230703154942513" loading="lazy"></figure>
+<p>​	WS网络由于随机改写连线，有可能出现孤立的集团，不利于分析。Newman和watts提出了改进的模型。</p>
+<p>​	（1）给定规则网：假如有一个节点总数为N，每个节点都与它最近邻的K=2k个节点相连线，形成一个有限的规则网络，要求N&gt;&gt;k&gt;&gt;1。</p>
+<p>​	（2）新增随机网络：对规则网络的N个节点，以概率为pK/2在任意的两个节点之间连线，但是不改动规则网络的原有的连线，也不允许则省道自身的连线和重复连线。</p>
+<p>​	小世界网络在p值较小的范围内具有大的群集系数和短的平均路径，称为小世界效应。许多现实的网络都具有这种性质。</p>
+<p>​	<strong>度分布</strong>，对于规则网络，每个节点都有度数K，因此规则网络的度分布是单点分布。随机网络的度分布是二项分布，可以用泊松分布来逼近。</p>
+<img src="https://raw.githubusercontent.com/huangyuxiang22/picgo/master/image-20230703160204748.png" alt="image-20230703160204748" style="zoom:50%;" />
+<p>​	<strong>无标度网络</strong>，万维网，代表目前可获取拓扑信息规模最大的网络。节点是网页，连线是网络之间的超链接，该网络的规模在1999年网络的度分布。</p>
+<figure data-type="image" tabindex="3"><img src="https://raw.githubusercontent.com/huangyuxiang22/picgo/master/image-20230703160815144.png" alt="image-20230703160815144" loading="lazy"></figure>
+<h2 id="1演化网络模型">1演化网络模型</h2>
+<p>​	BA模型，现在文献上通常将无标度网络基本模型称为BA模型。这是因为他们首先从动态的、增长的观点研究了复杂网络具有幂律分布的形成机理。BA模型的算法描述如下：</p>
+<figure data-type="image" tabindex="4"><img src="https://raw.githubusercontent.com/huangyuxiang22/picgo/master/image-20230703162007304.png" alt="image-20230703162007304" loading="lazy"></figure>
+<p>​		他们在这个模型中提出了两条重要的网络演化机理：增长和择优。这是从</p>
+<h2 id="6-网络传播-复杂网络p133">6 网络传播 复杂网络P133</h2>
+<p>​	一个典型的复杂网络是由许多的节点和连接节点的一些边组成的,节点可以代表真实系统当中的不同个体，边可以用来表示个体之间的关系，往往是两个节点之间具有某种特定的关系则连一条边，反之则不连边。有边的两个节点在网络当中被看作是相邻的。神经网络可以看作是大量神经细胞连接的网络。</p>
+<p>​	数学家和物理学家在考虑网络的时候，往往只关心两个节点之间有没有边相连接。至于节点的位置，边的长或者短，是弯曲还是平直，有没有相交都不是他们在意的。在这里，把网络不依赖与节点的具体位置和边的具体形态表现出来的性质就可以看成拓扑性质。那么。什么样子的网络可以描述真实的系统呢？</p>
+<p>​	介绍了规则网络，ER随机网络，WS小世界网络，以及BA无标度网络这几个网络</p>
+<p>​	终极目标之一就是理解网络的动力行为，特别是理解网络拓扑结构对其动力学的影响。高压输电网网络结构对因级联失效所导致的大停电事故的影响。计算机互联网的拓扑结构对信息传输的影响。</p>
+<p>​	一提到传播，人们首先想到的就是传染病的留下问题，实际上，计算机病毒在计算机网络上的蔓延，谣言在社会当中的扩散行为都可以看作服从某种桂林百度网络传播行为。</p>
+<p>​	数理学家在研究的时候，他们综述把这种可以在网络当中传播开来的东西叫做传染病，哪怕他只是一个谣言或者恐慌情绪。以前的网络大多是基于规则网络的，因此复杂网络不同的统计特征的发现使得科学家面临有更改结论的危险。</p>
+<p>​	目前研究最彻底，应用最广泛的就是SIR模型和SIS模型，SIR模型适合于传染患者在治愈后获得终身免疫力，或者患者不可避免的走向死亡的情绪。在SIR模型当中，人群划分成三类，易感人群（S），他们不会感染他人单有可能被传染；第二类是染病人群（I），他们已经染病，具有传染性；第三类是移除人群（R），他们是被治愈的，获得了免疫能力，或者已经走向死亡的人，没有传染性。不会对相应的动力学系统产生任何影响，可以看作被系统中移除。</p>
+<figure data-type="image" tabindex="5"><img src="https://raw.githubusercontent.com/huangyuxiang22/picgo/master/image-20230703180639097.png" alt="image-20230703180639097" loading="lazy"></figure>
+<p>​	对于像感冒这种治愈后患者没办法获得免疫力的疾病，使用SIR模型是不适宜的。</p>
+<figure data-type="image" tabindex="6"><img src="https://raw.githubusercontent.com/huangyuxiang22/picgo/master/image-20230703200146617.png" alt="image-20230703200146617" loading="lazy"></figure>
+<p>​	还有其他相应的传播模型。比如，对于突然爆火的尚未有效控制的流行病，黑死病，非典型肺炎可以使用SI模型进行分析；</p>
+<img src="https://raw.githubusercontent.com/huangyuxiang22/picgo/master/image-20230703200852297.png" alt="image-20230703200852297" style="zoom:50%;" />
+
+            </div>
+            
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

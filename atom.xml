@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://huangyuxiang22.github.io</id>
+    <title>HuangYuxiang</title>
+    <updated>2023-07-14T04:13:10.972Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://huangyuxiang22.github.io"/>
+    <link rel="self" href="https://huangyuxiang22.github.io/atom.xml"/>
+    <subtitle>温故而知新</subtitle>
+    <logo>https://huangyuxiang22.github.io/images/avatar.png</logo>
+    <icon>https://huangyuxiang22.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2023, HuangYuxiang</rights>
+    <entry>
+        <title type="html"><![CDATA[阅读札记]]></title>
+        <id>https://huangyuxiang22.github.io/post/yue-du-zha-ji/</id>
+        <link href="https://huangyuxiang22.github.io/post/yue-du-zha-ji/">
+        </link>
+        <updated>2023-07-13T14:34:21.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[复杂网络学习]]></title>
+        <id>https://huangyuxiang22.github.io/post/fu-za-wang-luo-xue-xi/</id>
+        <link href="https://huangyuxiang22.github.io/post/fu-za-wang-luo-xue-xi/">
+        </link>
+        <updated>2023-07-13T14:33:54.000Z</updated>
+    </entry>
+</feed>
